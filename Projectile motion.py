@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 #A basic projectile motion calculato/ animatio
 
 Speed = float(input("Enter speed in m/s: "))
@@ -17,6 +18,21 @@ plt.xlabel("Horizontal Distance")
 plt.ylabel("Vertical Distance")
 plt.title("Projectile motion")
 plt.grid(True)
+
+point, = plt.plot([], [], "ro", markersize=8)
+# init function
+def init():
+    point.set_data([], [])
+    return point,
+
+# update function
+def update(frame):
+    point.set_data([Dist_x[frame]], [Dist_y[frame]])
+    return point,
+
+ani = FuncAnimation(plt.gcf(), update, frames=len(t),
+                    init_func=init, blit=True, interval=50)
+
 plt.show()
 
 
